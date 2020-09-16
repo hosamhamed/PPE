@@ -1,0 +1,113 @@
+********* Frame: 0 (I) *********
+Convert to YCbCr:             286ms
+Low pass filter:              354ms
+Downsample:                   57ms
+Convert to frequency domain:  95ms
+Quantize:                     168ms
+Compute DC differences:       2ms
+Zig-zag order:                21ms
+Encode coefficients:          155ms
+
+********* Frame: 1 (I) *********
+Convert to YCbCr:             285ms
+Low pass filter:              356ms
+Downsample:                   59ms
+Convert to frequency domain:  94ms
+Quantize:                     173ms
+Compute DC differences:       3ms
+Zig-zag order:                22ms
+Encode coefficients:          156ms
+
+********* Frame: 2 (I) *********
+Convert to YCbCr:             292ms
+Low pass filter:              357ms
+Downsample:                   58ms
+Convert to frequency domain:  95ms
+Quantize:                     173ms
+Compute DC differences:       3ms
+Zig-zag order:                21ms
+Encode coefficients:          156ms
+
+********* Frame: 3 (I) *********
+Convert to YCbCr:             291ms
+Low pass filter:              359ms
+Downsample:                   58ms
+Convert to frequency domain:  95ms
+Quantize:                     170ms
+Compute DC differences:       3ms
+Zig-zag order:                20ms
+Encode coefficients:          154ms
+
+********* Frame: 4 (I) *********
+Convert to YCbCr:             288ms
+Low pass filter:              350ms
+Downsample:                   58ms
+Convert to frequency domain:  94ms
+Quantize:                     173ms
+Compute DC differences:       2ms
+Zig-zag order:                20ms
+Encode coefficients:          153ms
+
+********* Frame: 5 (I) *********
+Convert to YCbCr:             291ms
+Low pass filter:              352ms
+Downsample:                   57ms
+Convert to frequency domain:  95ms
+Quantize:                     170ms
+Compute DC differences:       2ms
+Zig-zag order:                20ms
+Encode coefficients:          153ms
+
+********* Frame: 6 (I) *********
+Convert to YCbCr:             282ms
+Low pass filter:              351ms
+Downsample:                   57ms
+Convert to frequency domain:  90ms
+Quantize:                     170ms
+Compute DC differences:       3ms
+Zig-zag order:                21ms
+Encode coefficients:          155ms
+
+********* Frame: 7 (I) *********
+Convert to YCbCr:             284ms
+Low pass filter:              352ms
+Downsample:                   55ms
+Convert to frequency domain:  90ms
+Quantize:                     170ms
+Compute DC differences:       3ms
+Zig-zag order:                20ms
+Encode coefficients:          153ms
+
+********* Frame: 8 (I) *********
+Convert to YCbCr:             275ms
+Low pass filter:              348ms
+Downsample:                   56ms
+Convert to frequency domain:  91ms
+Quantize:                     172ms
+Compute DC differences:       2ms
+Zig-zag order:                20ms
+Encode coefficients:          152ms
+
+********* Frame: 9 (I) *********
+Convert to YCbCr:             267ms
+Low pass filter:              350ms
+Downsample:                   59ms
+Convert to frequency domain:  93ms
+Quantize:                     170ms
+Compute DC differences:       3ms
+Zig-zag order:                20ms
+Encode coefficients:          156ms
+
+*********     Total    *********
+Convert to YCbCr:             2841ms
+Low pass filter:              3529ms
+Motion Vector Search:         0ms
+Compute Delta:                0ms
+Downsample:                   574ms
+Convert to frequency domain:  932ms
+Quantize:                     1709ms
+Compute DC differences:       26ms
+Zig-zag order:                205ms
+Encode coefficients:          1543ms
+
+Total runtime:                11359ms

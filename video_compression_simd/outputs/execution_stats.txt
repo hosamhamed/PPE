@@ -1,0 +1,67 @@
+********* Frame: 0 (I) *********
+Convert to YCbCr:             1ms
+Low pass filter:              1ms
+Downsample:                   0ms
+Convert to frequency domain:  0ms
+Quantize:                     1ms
+Compute DC differences:       0ms
+Zig-zag order:                0ms
+Encode coefficients:          1ms
+
+********* Frame: 1 (P) *********
+Convert to YCbCr:             1ms
+Low pass filter:              0ms
+Motion Vector Search:         42ms
+Compute Delta:                0ms
+Downsample:                   0ms
+Convert to frequency domain:  0ms
+Quantize:                     0ms
+Compute DC differences:       0ms
+Zig-zag order:                0ms
+Encode coefficients:          1ms
+
+********* Frame: 2 (I) *********
+Convert to YCbCr:             1ms
+Low pass filter:              0ms
+Downsample:                   1ms
+Convert to frequency domain:  1ms
+Quantize:                     2ms
+Compute DC differences:       0ms
+Zig-zag order:                0ms
+Encode coefficients:          1ms
+
+********* Frame: 3 (P) *********
+Convert to YCbCr:             0ms
+Low pass filter:              2ms
+Motion Vector Search:         43ms
+Compute Delta:                0ms
+Downsample:                   1ms
+Convert to frequency domain:  0ms
+Quantize:                     0ms
+Compute DC differences:       0ms
+Zig-zag order:                0ms
+Encode coefficients:          1ms
+
+********* Frame: 4 (I) *********
+Convert to YCbCr:             1ms
+Low pass filter:              1ms
+Downsample:                   1ms
+Convert to frequency domain:  0ms
+Quantize:                     0ms
+Compute DC differences:       0ms
+Zig-zag order:                1ms
+Encode coefficients:          1ms
+
+*********     Total    *********
+Convert to YCbCr:             4ms
+Low pass filter:              4ms
+Motion Vector Search:         85ms
+Compute Delta:                0ms
+Downsample:                   3ms
+Convert to frequency domain:  1ms
+Quantize:                     3ms
+Compute DC differences:       0ms
+Zig-zag order:                1ms
+Encode coefficients:          5ms
+
+Total runtime:                106ms
