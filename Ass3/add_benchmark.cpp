@@ -12,6 +12,7 @@
 #include "omp.h"
 #include <stdlib.h>
 #include <cstdint>
+#include <random>
 
 #define NUMBER_OF_RUNS 10
 #define TESTS_PER_RUN 1000*1000*1000L
@@ -92,8 +93,8 @@ int main(int argc, const char * argv[])
 
 
 /*
- Baseline add benchmark
- */
+Baseline add benchmark
+*/
 void add_microbenchmark1(char scale) {
 
 	unsigned long LOCAL_TESTS_PER_RUN = TESTS_PER_RUN * scale;
@@ -120,8 +121,8 @@ void add_microbenchmark1(char scale) {
 }
 
 /*
-	add benchmark 2
- */
+add benchmark 2
+*/
 void add_microbenchmark2(char scale) {
 
 	unsigned long LOCAL_TESTS_PER_RUN = TESTS_PER_RUN * scale;
@@ -151,8 +152,8 @@ void add_microbenchmark2(char scale) {
 
 
 /*
-	add benchmark 3
- */
+add benchmark 3
+*/
 void add_microbenchmark3(char scale) {
 
 	unsigned long LOCAL_TESTS_PER_RUN = TESTS_PER_RUN * scale;
@@ -177,8 +178,8 @@ void add_microbenchmark3(char scale) {
 }
 
 /*
-	add benchmark 4
- */
+add benchmark 4
+*/
 void add_microbenchmark4(char scale) {
 
 	unsigned long LOCAL_TESTS_PER_RUN = TESTS_PER_RUN * scale;
@@ -192,11 +193,11 @@ void add_microbenchmark4(char scale) {
 		__asm mov al, sum; //move sum to the lower significant 8 bits of the 16 bits wide %ax register
 		for (int test = 0; test < LOCAL_TESTS_PER_RUN; test += 1) {
 			__asm add al, scale; //add resgister %al content with scale variable and storing the result in %al
-			/*
-			 See http://locklessinc.com/articles/gcc_asm/
-			 Format: Instruction : constraint for %0 (variable) : constraint for %1 (variable)
-			 Constraints: +r input, r register
-			*/
+								 /*
+								 See http://locklessinc.com/articles/gcc_asm/
+								 Format: Instruction : constraint for %0 (variable) : constraint for %1 (variable)
+								 Constraints: +r input, r register
+								 */
 		}
 		__asm mov al, sum; //moving the result from %al back to the variable sum
 
@@ -210,8 +211,8 @@ void add_microbenchmark4(char scale) {
 }
 
 /*
-	add benchmark 5
- */
+add benchmark 5
+*/
 void add_microbenchmark5(char scale) {
 
 	unsigned long LOCAL_TESTS_PER_RUN = TESTS_PER_RUN * scale;
@@ -242,8 +243,8 @@ void add_microbenchmark5(char scale) {
 
 
 /*
-	add benchmark 6
- */
+add benchmark 6
+*/
 void add_microbenchmark6(char scale) {
 
 	unsigned long LOCAL_TESTS_PER_RUN = TESTS_PER_RUN * scale;
@@ -280,8 +281,8 @@ void add_microbenchmark6(char scale) {
 
 
 /*
-	add benchmark 7
- */
+add benchmark 7
+*/
 DECLSPEC_NOINLINE void add_microbenchmark7(char scale) {
 	//TODO :)
 
@@ -331,7 +332,7 @@ DECLSPEC_NOINLINE void add_microbenchmark7(char scale) {
 
 }
 /*
-add benchmark 8 
+add benchmark 8
 */
 DECLSPEC_NOINLINE void add_microbenchmark8(char scale) {
 	//TODO :)
@@ -386,23 +387,26 @@ add benchmark 9 loading sequential
 DECLSPEC_NOINLINE void add_microbenchmark9(char scale) {
 	//TODO :)
 	float scale_float = (float)scale;
-	unsigned long LOCAL_TESTS_PER_RUN = 1024*1024 * scale;
+	unsigned long LOCAL_TESTS_PER_RUN = 1024 * 1024 * scale;
 	long* data = (long*)malloc(LOCAL_TESTS_PER_RUN * sizeof(long));
-	int32_t X = 0;
+	long X = 0;
 
-	int nth;
+	int nth, nthread;
 	printf("Number of Threads: ");
 	scanf("%d", &nth);
-
+	printf("\nlong %d\n", sizeof(long));
 	omp_set_num_threads(nth);
 	double sum_GOPS = 0, avg_GOPS;
 	for (int run = 0; run < NUMBER_OF_RUNS; run++) {
 
-#pragma omp parallel
+#pragma omp parallel 
 		{
-
 			struct timeval start_time0, end_time0;
 			gettimeofday(&start_time0, NULL);
+			//int id = omp_get_thread_num();
+			//if (id == 0)
+			//printf("Number of Threads= %d\n", omp_get_num_threads());
+
 			for (unsigned long test = 0; test < LOCAL_TESTS_PER_RUN / nth; test += nth) {
 				X = data[test];
 				//__asm mov var1, sum;
@@ -420,8 +424,11 @@ DECLSPEC_NOINLINE void add_microbenchmark9(char scale) {
 		printf("X: %d ", X);
 		printf("Completed %lu loads in %g seconds for %g GOPS.\n", LOCAL_TESTS_PER_RUN, time_in_sec, GOPS);
 	}
-	avg_GOPS = sum_GOPS / NUMBER_OF_RUNS;
-	printf("\nAverage GOPS = %g\n", avg_GOPS);
+	avg_GOPS = sum_GOPS / NUMBER_OF_RUNS * 4;
+	printf("\nAverage GiB/s = %g\n", avg_GOPS);
+	//	printf("Number of Threads= %d\n", nthread);
+	//	printf("Number of Threads= %d\n", nthread);
+	getchar();
 }
 
 
@@ -431,27 +438,43 @@ add benchmark 10 loading random
 DECLSPEC_NOINLINE void add_microbenchmark10(char scale) {
 	//TODO :)
 	float scale_float = (float)scale;
+	int CACHE_LINE = 1;
 	unsigned long LOCAL_TESTS_PER_RUN = 1024 * 1024 * scale;
 	long* data = (long*)malloc(LOCAL_TESTS_PER_RUN * sizeof(long));
-	int32_t X = 0;
+	long* index = (long*)malloc(LOCAL_TESTS_PER_RUN * sizeof(long));
+	long X = 0;
 
 	int nth;
 	printf("Number of Threads: ");
 	scanf("%d", &nth);
-	unsigned long r;
+
 	omp_set_num_threads(nth);
 	double sum_GOPS = 0, avg_GOPS;
+
+	/* Seed */
+	std::random_device rd;
+
+	/* Random number generator */
+	std::default_random_engine generator(rd());
+
+	/* Distribution on which to apply the generator */
+	std::uniform_int_distribution<long unsigned> distribution(0, 0xFFFFFFFF);
+
+	for (unsigned long i = 0; i < LOCAL_TESTS_PER_RUN; i++)
+	{
+		index[i] = distribution(generator) % LOCAL_TESTS_PER_RUN;
+	}
+
 	for (int run = 0; run < NUMBER_OF_RUNS; run++) {
 
 #pragma omp parallel
 		{
-
 			struct timeval start_time0, end_time0;
 			gettimeofday(&start_time0, NULL);
 			for (unsigned long test = 0; test < LOCAL_TESTS_PER_RUN / nth; test += nth) {
-				r = rand() % (LOCAL_TESTS_PER_RUN / nth);
-				X = data[r];
-				//printf("r = %lu\n", r);
+				X = data[index[test]];
+				/*printf("r = %lu\n", index[test]);
+				getchar();*/
 				//__asm mov var1, sum;
 			}
 #pragma omp barrier
@@ -467,6 +490,7 @@ DECLSPEC_NOINLINE void add_microbenchmark10(char scale) {
 		printf("X: %d ", X);
 		printf("Completed %lu loads in %g seconds for %g GOPS.\n", LOCAL_TESTS_PER_RUN, time_in_sec, GOPS);
 	}
-	avg_GOPS = sum_GOPS / NUMBER_OF_RUNS;
-	printf("\nAverage GOPS = %g\n", avg_GOPS);
+	avg_GOPS = sum_GOPS / NUMBER_OF_RUNS * 4;
+	printf("\nAverage GiB/s = %g\n", avg_GOPS);
+	getchar();
 }
