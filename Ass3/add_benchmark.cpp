@@ -493,4 +493,5 @@ DECLSPEC_NOINLINE void add_microbenchmark10(char scale) {
 	avg_GOPS = sum_GOPS / NUMBER_OF_RUNS * 4;
 	printf("\nAverage GiB/s = %g\n", avg_GOPS);
 	getchar();
+
 }
